@@ -40,6 +40,35 @@
   border: 1px solid rgb(255 255 255 / 0.1);
 }
 
+.hero__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero__brand-copy {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hero__brand-copy strong {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.hero__brand-logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  padding: 0.45rem;
+  border-radius: 28px;
+  background: rgb(255 255 255 / 0.96);
+  box-shadow: 0 14px 32px rgb(15 23 42 / 0.22);
+}
+
 .hero__copy {
   background:
     radial-gradient(circle at 88% 18%, rgb(250 204 21 / 0.92) 0 8%, transparent 8.4%),
@@ -489,6 +518,16 @@
   .diploma-topbar {
     flex-direction: column;
     align-items: start;
+  }
+
+  .hero__brand {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .hero__brand-logo {
+    width: 92px;
+    height: 92px;
   }
 
   .diploma-button,

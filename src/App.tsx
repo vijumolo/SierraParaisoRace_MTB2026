@@ -17,6 +17,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import './App.css';
+import tctJaguarLogo from '../logo/TCTJaguar.png';
 
 GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 const appBase = import.meta.env.BASE_URL;
@@ -354,7 +355,13 @@ function App() {
       <main className="race-shell">
         <section className="hero">
           <div className="hero__copy">
-            <span className="hero__eyebrow">Resultados Oficiales</span>
+            <div className="hero__brand">
+              <img src={tctJaguarLogo} alt="Logo TCT Colombia's Team Timers" className="hero__brand-logo" />
+              <div className="hero__brand-copy">
+                <span className="hero__eyebrow">Resultados Oficiales</span>
+                <strong>TCT Colombia's Team Timers</strong>
+              </div>
+            </div>
             <h1>{data?.event.eventName ?? 'SIERRA PARAISO RACE'}</h1>
             <p>
               Consulta real del PDF oficial de resultados de la modalidad MTB. Cada registro muestra los datos exactos del
