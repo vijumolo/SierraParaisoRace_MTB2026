@@ -19,6 +19,7 @@ import {
 import './App.css';
 
 GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+const appBase = import.meta.env.BASE_URL;
 
 type ResultRecord = {
   bib: string;
@@ -79,6 +80,12 @@ const formatLongDate = (value: string) =>
 
 const getNumericPosition = (value: string) => Number(value.replace('.', '')) || Number.MAX_SAFE_INTEGER;
 
+const withBase = (value: string) => {
+  const normalizedBase = appBase.endsWith('/') ? appBase : `${appBase}/`;
+  const normalizedValue = value.startsWith('/') ? value.slice(1) : value;
+  return `${normalizedBase}${normalizedValue}`;
+};
+
 const buildDiplomaViewUrl = (record: ResultRecord) => {
   const params = new URLSearchParams({
     view: 'diploma',
@@ -118,7 +125,7 @@ function DiplomaViewer({
         renderTaskRef.current?.cancel();
         renderTaskRef.current = null;
 
-        const pdf = await getDocument(data.sourceFiles.diplomasPdf).promise;
+        const pdf = await getDocument(withBase(data.sourceFiles.diplomasPdf)).promise;
         const page = await pdf.getPage(record.diplomaPage);
         const viewport = page.getViewport({ scale: 2.2 });
         const canvas = canvasRef.current;
@@ -237,7 +244,7 @@ function App() {
       setError('');
 
       try {
-        const response = await fetch('/data/sierra-paraiso-race-mtb.json');
+        const response = await fetch(withBase('data/sierra-paraiso-race-mtb.json'));
         if (!response.ok) {
           throw new Error('No fue posible leer el dataset del evento.');
         }
@@ -364,11 +371,11 @@ function App() {
             </div>
 
             <div className="hero__actions">
-              <a href={data?.sourceFiles.resultsPdf ?? '#'} target="_blank" rel="noreferrer" className="hero__button hero__button--primary">
+              <a href={data ? withBase(data.sourceFiles.resultsPdf) : '#'} target="_blank" rel="noreferrer" className="hero__button hero__button--primary">
                 <FileSearch size={18} />
                 Ver PDF de resultados
               </a>
-              <a href={data?.sourceFiles.diplomasPdf ?? '#'} target="_blank" rel="noreferrer" className="hero__button hero__button--ghost">
+              <a href={data ? withBase(data.sourceFiles.diplomasPdf) : '#'} target="_blank" rel="noreferrer" className="hero__button hero__button--ghost">
                 <FileText size={18} />
                 Ver PDF de diplomas
               </a>
